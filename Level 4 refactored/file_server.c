@@ -7,7 +7,7 @@
 #include <time.h>
 
 #define BUFFER_SIZE 250
-#define MAX_FILES 20
+#define MAX_FILES 10
 #define WRITE 2
 #define READ 4
 #define EMPTY 8
@@ -26,6 +26,7 @@ typedef struct _file_tracker
     int users;
     int sequence_id;
     int current_access;
+    int fnext;
 } file_tracker;
 
 typedef struct _argument
@@ -35,6 +36,7 @@ typedef struct _argument
     char string[50];
     char wholecommand[106];
     int sequence_id;
+    int commandtype;
 } argument;
 
 // DEFINING GLOBAL VARIABLES
@@ -54,6 +56,7 @@ sem_t tracklock;
 sem_t filequeue;
 int activefiles = 0;
 int thread_sequence = 0;
+int next = 0;
 
 // HELPER FUNCTION PROTOTYPES
 void rwlock_init(rwlock_t *lock);
@@ -71,13 +74,14 @@ void empty_command(char *wholecommand, char *dest);
 int tracklist_check(char *dir);
 void release_filespot(int index);
 void fsequence_check(int rwlock_index, int sequence_id_filequeue);
+void log_commands(argument *arg);
+argument *parse_input(char *input, int i);
+
 
 void *worker_thread(void *arg)
 {
-
     // fix sequence of threads
     // pthread_mutex_lock(&sequencelock);
-
     pthread_mutex_lock(&workerlock);
 
     int sequence_id;
@@ -87,78 +91,59 @@ void *worker_thread(void *arg)
 
     argument *thread_info = (argument *)arg;
 
-    sequence_id = thread_info->sequence_id;
-
-    while (sequence_id != thread_sequence)
+    while (thread_info->sequence_id != thread_sequence)
     {
         pthread_cond_wait(&sequencecond, &workerlock);
     }
 
+    next = 0;
     thread_sequence++;
 
-    char *command = malloc(6);
-    char *truedir = malloc(50);
-    char *string = malloc(50);
-    char *wholecommandarg = malloc(106);
-    strcpy(command, thread_info->command);
-    strcpy(truedir, thread_info->dir);
-    strcpy(string, thread_info->string);
-    strcpy(wholecommandarg, thread_info->wholecommand);
+    rwlock_index = tracklist_check(thread_info->dir);
+    next = 1;
+    sequence_id_filequeue = tracklist[rwlock_index].sequence_id;
 
-    // check if write, or (read/empty)
-    if (strcmp("write", command) == 0)
-        commandtype = 2;
-    if (strcmp("read", command) == 0)
-        commandtype = 4;
-    if (strcmp("empty", command) == 0)
-        commandtype = 8;
+    tracklist[rwlock_index].sequence_id++;
 
-    if (commandtype == WRITE)
+    if (thread_info->commandtype == WRITE)
     {
-        rwlock_index = tracklist_check(truedir);
-        sequence_id_filequeue = tracklist[rwlock_index].sequence_id;
-        tracklist[rwlock_index].sequence_id++;
 
         pthread_mutex_unlock(&workerlock);
-
         fsequence_check(rwlock_index, sequence_id_filequeue);
 
         rwlock_acquire_writelock(&mutexes[rwlock_index]);
-        printf("%s on slot %d | active files: %d\n", wholecommandarg, rwlock_index, activefiles);
-        write_command(wholecommandarg, truedir, string);
+        printf("%s on slot %d | active files: %d\n", thread_info->command, rwlock_index, activefiles);
+        write_command(thread_info->wholecommand, thread_info->dir, thread_info->string);
         rwlock_release_writelock(&mutexes[rwlock_index]);
     }
     else
     {
 
-        rwlock_index = tracklist_check(truedir);
-        sequence_id_filequeue = tracklist[rwlock_index].sequence_id;
-        tracklist[rwlock_index].sequence_id++;
-
-        if (commandtype == READ)
+        if (thread_info->commandtype == READ)
         {
             pthread_mutex_unlock(&workerlock);
 
             fsequence_check(rwlock_index, sequence_id_filequeue);
 
             rwlock_acquire_readlock(&mutexes[rwlock_index]);
-            printf("%s %s on slot %d | active files: %d\n", command, truedir, rwlock_index, activefiles);
-            read_command(wholecommandarg, truedir);
+            printf("%s %s on slot %d | active files: %d\n", thread_info->command, thread_info->dir, rwlock_index, activefiles);
+            read_command(thread_info->wholecommand, thread_info->dir);
             rwlock_release_readlock(&mutexes[rwlock_index]);
         }
 
-        if (commandtype == EMPTY)
+        if (thread_info->commandtype == EMPTY)
         {
             pthread_mutex_unlock(&workerlock);
 
             fsequence_check(rwlock_index, sequence_id_filequeue);
 
             rwlock_acquire_writelock(&mutexes[rwlock_index]);
-            printf("%s %s on slot %d | active files: %d\n", command, truedir, rwlock_index, activefiles);
-            empty_command(wholecommandarg, truedir);
+            printf("%s %s on slot %d | active files: %d\n", thread_info->command, thread_info->dir, rwlock_index, activefiles);
+            empty_command(thread_info->wholecommand, thread_info->dir);
             rwlock_release_writelock(&mutexes[rwlock_index]);
         }
     }
+    tracklist[rwlock_index].fnext = 1;
     release_filespot(rwlock_index);
     pthread_exit(NULL);
 }
@@ -166,61 +151,21 @@ void *worker_thread(void *arg)
 void *master_thread(void *arg)
 {
     puts("FILESERVER READY TO ACCEPT INPUTS");
-    FILE *fptr;
-    time_t curtime;
 
     int i = 0;
     while (1)
     {
         char input[106];
-        char *command;
-        char *dir;
-        char *string;
         argument *arg = malloc(sizeof(argument));
 
         if (fgets(input, 106, stdin) == NULL)
             break;
-        if (strlen(input) < 4)
-            break;
 
-        input[strlen(input) - 2] = 0;
-
-        // ORIGINAL
-        // pthread_create(&tid, NULL, &worker_thread, &input);
-        // pthread_detach(tid);
-
-        strcpy(arg->wholecommand, input);
-        command = strtok(input, " ");
-        if (strcmp(command, "write") == 0)
-        {
-            dir = strtok(NULL, " ");
-            string = strtok(NULL, "\0");
-            strcpy(arg->string, string);
-        }
-        else
-            dir = strtok(NULL, "\n\0");
-
-        strcpy(arg->command, command);
-        strcpy(arg->dir, dir);
-
-        arg->sequence_id = i;
-
-        // printf("NEW THREAD: %s %s %s id: %d\n", command, dir, string, i);
+        arg = parse_input(input, i);
 
         pthread_create(&tid, NULL, &worker_thread, arg);
         pthread_detach(tid);
 
-        if ((fptr = fopen("commands.txt", "a")) == NULL)
-        {
-            puts("LOGGING COMMAND FAILED");
-        }
-
-        time(&curtime);
-        char *c_time_string = ctime(&curtime);
-
-        // fprintf(stderr, "%s %s\n", input, c_time_string);
-        fprintf(fptr, "%s %s\n", input, c_time_string);
-        fclose(fptr);
         i++;
     }
     while (1)
@@ -233,10 +178,14 @@ void *waker(void *arg)
 {
     while (1)
     {
-        pthread_cond_signal(&sequencecond);
+        if (next == 1)
+        {
+            pthread_cond_signal(&sequencecond);
+        }
         for (int i = 0; i < MAX_FILES; i++)
-            pthread_cond_signal(&fsequencecond[i]);
-        usleep(20);
+            if (tracklist[i].fnext == 1)
+                pthread_cond_signal(&fsequencecond[i]);
+        usleep(10);
     }
 }
 
@@ -268,6 +217,62 @@ int main()
 }
 
 // HELPER FUNCTIONS
+
+argument *parse_input(char *input, int i)
+{
+    char *command;
+    char *dir;
+    char *string;
+    argument *arg = malloc(sizeof(argument));
+
+    input[strlen(input) - 2] = 0;
+
+    strcpy(arg->wholecommand, input);
+    command = strtok(input, " ");
+    if (strcmp(command, "write") == 0)
+    {
+        dir = strtok(NULL, " ");
+        string = strtok(NULL, "\n\0");
+        strcpy(arg->string, string);
+        arg->commandtype = WRITE;
+    }
+    else
+    {
+        dir = strtok(NULL, "\n\0");
+        if (strcmp(command, "read") == 0)
+            arg->commandtype = READ;
+        if (strcmp(command, "empty") == 0)
+            arg->commandtype = EMPTY;
+    }
+
+    strcpy(arg->command, command);
+    strcpy(arg->dir, dir);
+    arg->sequence_id = i;
+
+    return arg;
+}
+
+void log_commands(argument *arg)
+{
+    FILE *fptr;
+    time_t curtime;
+    if ((fptr = fopen("commands.txt", "a")) == NULL)
+    {
+        puts("LOGGING COMMAND FAILED");
+    }
+
+    time(&curtime);
+    char *c_time_string = ctime(&curtime);
+
+    // fprintf(stderr, "%s %s\n", input, c_time_string);
+    if (arg->commandtype == WRITE)
+        fprintf(fptr, "%s %s %s %s", arg->command, arg->dir, arg->string, c_time_string);
+    else
+        fprintf(fptr, "%s %s %s", arg->command, arg->dir, c_time_string);
+
+    fclose(fptr);
+}
+
 void fsequence_check(int rwlock_index, int sequence_id_filequeue)
 {
     pthread_mutex_lock(&fsequencelock[rwlock_index]);
@@ -278,6 +283,7 @@ void fsequence_check(int rwlock_index, int sequence_id_filequeue)
     printf("Fseq: %d | curr_access: %d\n", sequence_id_filequeue, tracklist[rwlock_index].current_access);
 
     // iterate current access to signal next job in the sequence that they can run now.
+    tracklist[rwlock_index].fnext = 0;
     tracklist[rwlock_index].current_access++;
 
     pthread_mutex_unlock(&fsequencelock[rwlock_index]);
@@ -355,7 +361,6 @@ void WRITE_LOGS(char *command, char *dest, char *contents)
 void READ_CONTENT(char *command, char *dest, FILE *fp1)
 {
     FILE *fptr;
-    // fprintf(stderr, "fptr: %p\n", fp1);
     long numbytes;
     char buffer[BUFFER_SIZE];
 
@@ -402,7 +407,7 @@ void write_command(char *wholecommand, char *dest, char *string)
         fputc(string[i], fptr);
         usleep(25);
     }
-    // fprintf(fptr, "\n");
+
     fclose(fptr);
 }
 
@@ -413,7 +418,6 @@ void read_command(char *wholecommand, char *dest)
     FILE_OPEN_SIMULATION();
     FILE *fptr;
 
-    // dest[strlen(dest)-1] = 0;
 
     if ((fptr = fopen(dest, "r")) == NULL)
     {
@@ -421,7 +425,6 @@ void read_command(char *wholecommand, char *dest)
         return;
     }
 
-    // fprintf(stderr, "fptr: %p\n", fptr);
     READ_CONTENT(wholecommand, "read.txt", fptr);
     fclose(fptr);
 }
