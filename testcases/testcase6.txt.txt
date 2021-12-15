@@ -1,0 +1,400 @@
+write ./outputs/a.txt a <1>
+write ./outputs/b.txt b <1>
+write ./outputs/c.txt c <1>
+write ./outputs/d.txt d <1>
+write ./outputs/e.txt e <1>
+write ./outputs/f.txt f <1>
+write ./outputs/g.txt g <1>
+write ./outputs/h.txt h <1>
+write ./outputs/i.txt i <1>
+write ./outputs/j.txt j <1>
+write ./outputs/k.txt k <1>
+write ./outputs/l.txt l <1>
+write ./outputs/m.txt m <1>
+write ./outputs/n.txt n <1>
+write ./outputs/o.txt o <1>
+write ./outputs/p.txt p <1>
+write ./outputs/q.txt q <1>
+write ./outputs/r.txt r <1>
+write ./outputs/s.txt s <1>
+write ./outputs/t.txt t <1>
+write ./outputs/a.txt a <1>
+write ./outputs/b.txt b <1>
+write ./outputs/c.txt c <1>
+write ./outputs/d.txt d <1>
+write ./outputs/e.txt e <1>
+write ./outputs/f.txt f <1>
+write ./outputs/g.txt g <1>
+write ./outputs/h.txt h <1>
+write ./outputs/i.txt i <1>
+write ./outputs/j.txt j <1>
+write ./outputs/k.txt k <1>
+write ./outputs/l.txt l <1>
+write ./outputs/m.txt m <1>
+write ./outputs/n.txt n <1>
+write ./outputs/o.txt o <1>
+write ./outputs/p.txt p <1>
+write ./outputs/q.txt q <1>
+write ./outputs/r.txt r <1>
+write ./outputs/s.txt s <1>
+write ./outputs/t.txt t <1>
+write ./outputs/a.txt a <1>
+write ./outputs/b.txt b <1>
+write ./outputs/c.txt c <1>
+write ./outputs/d.txt d <1>
+write ./outputs/e.txt e <1>
+write ./outputs/f.txt f <1>
+write ./outputs/g.txt g <1>
+write ./outputs/h.txt h <1>
+write ./outputs/i.txt i <1>
+write ./outputs/j.txt j <1>
+write ./outputs/k.txt k <1>
+write ./outputs/l.txt l <1>
+write ./outputs/m.txt m <1>
+write ./outputs/n.txt n <1>
+write ./outputs/o.txt o <1>
+write ./outputs/p.txt p <1>
+write ./outputs/q.txt q <1>
+write ./outputs/r.txt r <1>
+write ./outputs/s.txt s <1>
+write ./outputs/t.txt t <1>
+write ./outputs/a.txt a <1>
+write ./outputs/b.txt b <1>
+write ./outputs/c.txt c <1>
+write ./outputs/d.txt d <1>
+write ./outputs/e.txt e <1>
+write ./outputs/f.txt f <1>
+write ./outputs/g.txt g <1>
+write ./outputs/h.txt h <1>
+write ./outputs/i.txt i <1>
+write ./outputs/j.txt j <1>
+write ./outputs/k.txt k <1>
+write ./outputs/l.txt l <1>
+write ./outputs/m.txt m <1>
+write ./outputs/n.txt n <1>
+write ./outputs/o.txt o <1>
+write ./outputs/p.txt p <1>
+write ./outputs/q.txt q <1>
+write ./outputs/r.txt r <1>
+write ./outputs/s.txt s <1>
+write ./outputs/t.txt t <1>
+write ./outputs/a.txt a <1>
+write ./outputs/b.txt b <1>
+write ./outputs/c.txt c <1>
+write ./outputs/d.txt d <1>
+write ./outputs/e.txt e <1>
+write ./outputs/f.txt f <1>
+write ./outputs/g.txt g <1>
+write ./outputs/h.txt h <1>
+write ./outputs/i.txt i <1>
+write ./outputs/j.txt j <1>
+write ./outputs/k.txt k <1>
+write ./outputs/l.txt l <1>
+write ./outputs/m.txt m <1>
+write ./outputs/n.txt n <1>
+write ./outputs/o.txt o <1>
+write ./outputs/p.txt p <1>
+write ./outputs/q.txt q <1>
+write ./outputs/r.txt r <1>
+write ./outputs/s.txt s <1>
+write ./outputs/t.txt t <1>
+write ./outputs/a.txt a <2>
+write ./outputs/b.txt b <2>
+write ./outputs/c.txt c <2>
+write ./outputs/d.txt d <2>
+write ./outputs/e.txt e <2>
+write ./outputs/f.txt f <2>
+write ./outputs/g.txt g <2>
+write ./outputs/h.txt h <2>
+write ./outputs/i.txt i <2>
+write ./outputs/j.txt j <2>
+write ./outputs/k.txt k <2>
+write ./outputs/l.txt l <2>
+write ./outputs/m.txt m <2>
+write ./outputs/n.txt n <2>
+write ./outputs/o.txt o <2>
+write ./outputs/p.txt p <2>
+write ./outputs/q.txt q <2>
+write ./outputs/r.txt r <2>
+write ./outputs/s.txt s <2>
+write ./outputs/t.txt t <2>
+write ./outputs/a.txt a <2>
+write ./outputs/b.txt b <2>
+write ./outputs/c.txt c <2>
+write ./outputs/d.txt d <2>
+write ./outputs/e.txt e <2>
+write ./outputs/f.txt f <2>
+write ./outputs/g.txt g <2>
+write ./outputs/h.txt h <2>
+write ./outputs/i.txt i <2>
+write ./outputs/j.txt j <2>
+write ./outputs/k.txt k <2>
+write ./outputs/l.txt l <2>
+write ./outputs/m.txt m <2>
+write ./outputs/n.txt n <2>
+write ./outputs/o.txt o <2>
+write ./outputs/p.txt p <2>
+write ./outputs/q.txt q <2>
+write ./outputs/r.txt r <2>
+write ./outputs/s.txt s <2>
+write ./outputs/t.txt t <2>
+write ./outputs/a.txt a <2>
+write ./outputs/b.txt b <2>
+write ./outputs/c.txt c <2>
+write ./outputs/d.txt d <2>
+write ./outputs/e.txt e <2>
+write ./outputs/f.txt f <2>
+write ./outputs/g.txt g <2>
+write ./outputs/h.txt h <2>
+write ./outputs/i.txt i <2>
+write ./outputs/j.txt j <2>
+write ./outputs/k.txt k <2>
+write ./outputs/l.txt l <2>
+write ./outputs/m.txt m <2>
+write ./outputs/n.txt n <2>
+write ./outputs/o.txt o <2>
+write ./outputs/p.txt p <2>
+write ./outputs/q.txt q <2>
+write ./outputs/r.txt r <2>
+write ./outputs/s.txt s <2>
+write ./outputs/t.txt t <2>
+write ./outputs/a.txt a <2>
+write ./outputs/b.txt b <2>
+write ./outputs/c.txt c <2>
+write ./outputs/d.txt d <2>
+write ./outputs/e.txt e <2>
+write ./outputs/f.txt f <2>
+write ./outputs/g.txt g <2>
+write ./outputs/h.txt h <2>
+write ./outputs/i.txt i <2>
+write ./outputs/j.txt j <2>
+write ./outputs/k.txt k <2>
+write ./outputs/l.txt l <2>
+write ./outputs/m.txt m <2>
+write ./outputs/n.txt n <2>
+write ./outputs/o.txt o <2>
+write ./outputs/p.txt p <2>
+write ./outputs/q.txt q <2>
+write ./outputs/r.txt r <2>
+write ./outputs/s.txt s <2>
+write ./outputs/t.txt t <2>
+write ./outputs/a.txt a <2>
+write ./outputs/b.txt b <2>
+write ./outputs/c.txt c <2>
+write ./outputs/d.txt d <2>
+write ./outputs/e.txt e <2>
+write ./outputs/f.txt f <2>
+write ./outputs/g.txt g <2>
+write ./outputs/h.txt h <2>
+write ./outputs/i.txt i <2>
+write ./outputs/j.txt j <2>
+write ./outputs/k.txt k <2>
+write ./outputs/l.txt l <2>
+write ./outputs/m.txt m <2>
+write ./outputs/n.txt n <2>
+write ./outputs/o.txt o <2>
+write ./outputs/p.txt p <2>
+write ./outputs/q.txt q <2>
+write ./outputs/r.txt r <2>
+write ./outputs/s.txt s <2>
+write ./outputs/t.txt t <2>
+read ./outputs/a.txt
+empty ./outputs/a.txt
+read ./outputs/b.txt
+empty ./outputs/b.txt
+read ./outputs/c.txt
+empty ./outputs/c.txt
+read ./outputs/d.txt
+empty ./outputs/d.txt
+read ./outputs/e.txt
+empty ./outputs/e.txt
+read ./outputs/f.txt
+empty ./outputs/f.txt
+read ./outputs/g.txt
+empty ./outputs/g.txt
+read ./outputs/h.txt
+empty ./outputs/h.txt
+read ./outputs/i.txt
+empty ./outputs/i.txt
+read ./outputs/j.txt
+empty ./outputs/j.txt
+read ./outputs/k.txt
+empty ./outputs/k.txt
+read ./outputs/l.txt
+empty ./outputs/l.txt
+read ./outputs/m.txt
+empty ./outputs/m.txt
+read ./outputs/n.txt
+empty ./outputs/n.txt
+read ./outputs/o.txt
+empty ./outputs/o.txt
+read ./outputs/p.txt
+empty ./outputs/p.txt
+read ./outputs/q.txt
+empty ./outputs/q.txt
+read ./outputs/r.txt
+empty ./outputs/r.txt
+read ./outputs/s.txt
+empty ./outputs/s.txt
+read ./outputs/t.txt
+empty ./outputs/t.txt
+read ./outputs/a.txt
+empty ./outputs/a.txt
+read ./outputs/b.txt
+empty ./outputs/b.txt
+read ./outputs/c.txt
+empty ./outputs/c.txt
+read ./outputs/d.txt
+empty ./outputs/d.txt
+read ./outputs/e.txt
+empty ./outputs/e.txt
+read ./outputs/f.txt
+empty ./outputs/f.txt
+read ./outputs/g.txt
+empty ./outputs/g.txt
+read ./outputs/h.txt
+empty ./outputs/h.txt
+read ./outputs/i.txt
+empty ./outputs/i.txt
+read ./outputs/j.txt
+empty ./outputs/j.txt
+read ./outputs/k.txt
+empty ./outputs/k.txt
+read ./outputs/l.txt
+empty ./outputs/l.txt
+read ./outputs/m.txt
+empty ./outputs/m.txt
+read ./outputs/n.txt
+empty ./outputs/n.txt
+read ./outputs/o.txt
+empty ./outputs/o.txt
+read ./outputs/p.txt
+empty ./outputs/p.txt
+read ./outputs/q.txt
+empty ./outputs/q.txt
+read ./outputs/r.txt
+empty ./outputs/r.txt
+read ./outputs/s.txt
+empty ./outputs/s.txt
+read ./outputs/t.txt
+empty ./outputs/t.txt
+read ./outputs/a.txt
+empty ./outputs/a.txt
+read ./outputs/b.txt
+empty ./outputs/b.txt
+read ./outputs/c.txt
+empty ./outputs/c.txt
+read ./outputs/d.txt
+empty ./outputs/d.txt
+read ./outputs/e.txt
+empty ./outputs/e.txt
+read ./outputs/f.txt
+empty ./outputs/f.txt
+read ./outputs/g.txt
+empty ./outputs/g.txt
+read ./outputs/h.txt
+empty ./outputs/h.txt
+read ./outputs/i.txt
+empty ./outputs/i.txt
+read ./outputs/j.txt
+empty ./outputs/j.txt
+read ./outputs/k.txt
+empty ./outputs/k.txt
+read ./outputs/l.txt
+empty ./outputs/l.txt
+read ./outputs/m.txt
+empty ./outputs/m.txt
+read ./outputs/n.txt
+empty ./outputs/n.txt
+read ./outputs/o.txt
+empty ./outputs/o.txt
+read ./outputs/p.txt
+empty ./outputs/p.txt
+read ./outputs/q.txt
+empty ./outputs/q.txt
+read ./outputs/r.txt
+empty ./outputs/r.txt
+read ./outputs/s.txt
+empty ./outputs/s.txt
+read ./outputs/t.txt
+empty ./outputs/t.txt
+read ./outputs/a.txt
+empty ./outputs/a.txt
+read ./outputs/b.txt
+empty ./outputs/b.txt
+read ./outputs/c.txt
+empty ./outputs/c.txt
+read ./outputs/d.txt
+empty ./outputs/d.txt
+read ./outputs/e.txt
+empty ./outputs/e.txt
+read ./outputs/f.txt
+empty ./outputs/f.txt
+read ./outputs/g.txt
+empty ./outputs/g.txt
+read ./outputs/h.txt
+empty ./outputs/h.txt
+read ./outputs/i.txt
+empty ./outputs/i.txt
+read ./outputs/j.txt
+empty ./outputs/j.txt
+read ./outputs/k.txt
+empty ./outputs/k.txt
+read ./outputs/l.txt
+empty ./outputs/l.txt
+read ./outputs/m.txt
+empty ./outputs/m.txt
+read ./outputs/n.txt
+empty ./outputs/n.txt
+read ./outputs/o.txt
+empty ./outputs/o.txt
+read ./outputs/p.txt
+empty ./outputs/p.txt
+read ./outputs/q.txt
+empty ./outputs/q.txt
+read ./outputs/r.txt
+empty ./outputs/r.txt
+read ./outputs/s.txt
+empty ./outputs/s.txt
+read ./outputs/t.txt
+empty ./outputs/t.txt
+read ./outputs/a.txt
+empty ./outputs/a.txt
+read ./outputs/b.txt
+empty ./outputs/b.txt
+read ./outputs/c.txt
+empty ./outputs/c.txt
+read ./outputs/d.txt
+empty ./outputs/d.txt
+read ./outputs/e.txt
+empty ./outputs/e.txt
+read ./outputs/f.txt
+empty ./outputs/f.txt
+read ./outputs/g.txt
+empty ./outputs/g.txt
+read ./outputs/h.txt
+empty ./outputs/h.txt
+read ./outputs/i.txt
+empty ./outputs/i.txt
+read ./outputs/j.txt
+empty ./outputs/j.txt
+read ./outputs/k.txt
+empty ./outputs/k.txt
+read ./outputs/l.txt
+empty ./outputs/l.txt
+read ./outputs/m.txt
+empty ./outputs/m.txt
+read ./outputs/n.txt
+empty ./outputs/n.txt
+read ./outputs/o.txt
+empty ./outputs/o.txt
+read ./outputs/p.txt
+empty ./outputs/p.txt
+read ./outputs/q.txt
+empty ./outputs/q.txt
+read ./outputs/r.txt
+empty ./outputs/r.txt
+read ./outputs/s.txt
+empty ./outputs/s.txt
+read ./outputs/t.txt
+empty ./outputs/t.txt

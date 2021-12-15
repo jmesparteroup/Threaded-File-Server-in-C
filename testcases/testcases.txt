@@ -1,0 +1,120 @@
+write a.txt hello  <1>
+write a.txt world  <1>
+write a.txt I  <1>
+write a.txt am <1>
+write a.txt Willy <1>
+write a.txt   <1>
+write b.txt hello  <1>
+write b.txt world  <1>
+write b.txt I  <1>
+write b.txt am <1>
+write b.txt Willy <1>
+write b.txt   <1>
+write a.txt hello  <2>
+write a.txt world  <2>
+write a.txt I  <2>
+write a.txt am <2>
+write a.txt Willy <2>
+write a.txt   <2>
+write b.txt hello  <2>
+write b.txt world  <2>
+write b.txt I  <2>
+write b.txt am <2>
+write b.txt Willy <2>
+write b.txt   <2>
+write a.txt hello  <3>
+write a.txt world  <3>
+write a.txt I  <3>
+write a.txt am <3>
+write a.txt Willy <3>
+write a.txt   <3>
+write b.txt hello  <3>
+write b.txt world  <3>
+write b.txt I  <3>
+write b.txt am <3>
+write b.txt Willy <3>
+write b.txt   <3>
+write a.txt hello  <4>
+write a.txt world  <4>
+write a.txt I  <4>
+write a.txt am <4>
+write a.txt Willy <4>
+write a.txt   <4>
+write b.txt hello  <4>
+write b.txt world  <4>
+write b.txt I  <4>
+write b.txt am <4>
+write b.txt Willy <4>
+write b.txt   <4>
+write a.txt hello  <5>
+write a.txt world  <5>
+write a.txt I  <5>
+write a.txt am <5>
+write a.txt Willy <5>
+write a.txt   <5>
+write b.txt hello  <5>
+write b.txt world  <5>
+write b.txt I  <5>
+write b.txt am <5>
+write b.txt Willy <5>
+write b.txt   <5>
+write a.txt hello  <6>
+write a.txt world  <6>
+write a.txt I  <6>
+write a.txt am <6>
+write a.txt Willy <6>
+write a.txt   <6>
+write b.txt hello  <6>
+write b.txt world  <6>
+write b.txt I  <6>
+write b.txt am <6>
+write b.txt Willy <6>
+write b.txt   <6>
+write a.txt hello  <7>
+write a.txt world  <7>
+write a.txt I  <7>
+write a.txt am <7>
+write a.txt Willy <7>
+write a.txt   <7>
+write b.txt hello  <7>
+write b.txt world  <7>
+write b.txt I  <7>
+write b.txt am <7>
+write b.txt Willy <7>
+write b.txt   <7>
+write a.txt hello  <8>
+write a.txt world  <8>
+write a.txt I  <8>
+write a.txt am <8>
+write a.txt Willy <8>
+write a.txt   <8>
+write b.txt hello  <8>
+write b.txt world  <8>
+write b.txt I  <8>
+write b.txt am <8>
+write b.txt Willy <8>
+write b.txt   <8>
+write a.txt hello  <9>
+write a.txt world  <9>
+write a.txt I  <9>
+write a.txt am <9>
+write a.txt Willy <9>
+write a.txt   <9>
+write b.txt hello  <9>
+write b.txt world  <9>
+write b.txt I  <9>
+write b.txt am <9>
+write b.txt Willy <9>
+write b.txt   <9>
+write a.txt hello  <10>
+write a.txt world  <10>
+write a.txt I  <10>
+write a.txt am <10>
+write a.txt Willy <10>
+write a.txt   <10>
+write b.txt hello  <10>
+write b.txt world  <10>
+write b.txt I  <10>
+write b.txt am <10>
+write b.txt Willy <10>
+write b.txt   <10>

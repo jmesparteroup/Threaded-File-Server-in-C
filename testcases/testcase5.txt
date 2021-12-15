@@ -1,0 +1,180 @@
+write ./outputs/a.txt hello  	 <1>
+write ./outputs/a.txt world  	 <1>
+write ./outputs/a.txt I  	 <1>
+write ./outputs/a.txt am 	 <1>
+write ./outputs/a.txt Willy 	 <1>
+write ./outputs/a.txt   	 <1>
+write ./outputs/a.txt hello  	 <2>
+write ./outputs/a.txt world  	 <2>
+write ./outputs/a.txt I  	 <2>
+write ./outputs/a.txt am 	 <2>
+write ./outputs/a.txt Willy 	 <2>
+write ./outputs/a.txt   	 <2>
+write ./outputs/a.txt hello  	 <3>
+write ./outputs/a.txt world  	 <3>
+write ./outputs/a.txt I  	 <3>
+write ./outputs/a.txt am 	 <3>
+write ./outputs/a.txt Willy 	 <3>
+write ./outputs/a.txt   	 <3>
+write ./outputs/a.txt hello  	 <4>
+write ./outputs/a.txt world  	 <4>
+write ./outputs/a.txt I  	 <4>
+write ./outputs/a.txt am 	 <4>
+write ./outputs/a.txt Willy 	 <4>
+write ./outputs/a.txt   	 <4>
+write ./outputs/a.txt hello  	 <5>
+write ./outputs/a.txt world  	 <5>
+write ./outputs/a.txt I  	 <5>
+write ./outputs/a.txt am 	 <5>
+write ./outputs/a.txt Willy 	 <5>
+write ./outputs/a.txt   	 <5>
+write ./outputs/a.txt hello  	 <6>
+write ./outputs/a.txt world  	 <6>
+write ./outputs/a.txt I  	 <6>
+write ./outputs/a.txt am 	 <6>
+write ./outputs/a.txt Willy 	 <6>
+write ./outputs/a.txt   	 <6>
+write ./outputs/a.txt hello  	 <7>
+write ./outputs/a.txt world  	 <7>
+write ./outputs/a.txt I  	 <7>
+write ./outputs/a.txt am 	 <7>
+write ./outputs/a.txt Willy 	 <7>
+write ./outputs/a.txt   	 <7>
+write ./outputs/a.txt hello  	 <8>
+write ./outputs/a.txt world  	 <8>
+write ./outputs/a.txt I  	 <8>
+write ./outputs/a.txt am 	 <8>
+write ./outputs/a.txt Willy 	 <8>
+write ./outputs/a.txt   	 <8>
+write ./outputs/a.txt hello  	 <9>
+write ./outputs/a.txt world  	 <9>
+write ./outputs/a.txt I  	 <9>
+write ./outputs/a.txt am 	 <9>
+write ./outputs/a.txt Willy 	 <9>
+write ./outputs/a.txt   	 <9>
+write ./outputs/a.txt hello  	 <10>
+write ./outputs/a.txt world  	 <10>
+write ./outputs/a.txt I  	 <10>
+write ./outputs/a.txt am 	 <10>
+write ./outputs/a.txt Willy 	 <10>
+write ./outputs/a.txt   	 <10>
+write ./outputs/a.txt hello  	 <11>
+write ./outputs/a.txt world  	 <11>
+write ./outputs/a.txt I  	 <11>
+write ./outputs/a.txt am 	 <11>
+write ./outputs/a.txt Willy 	 <11>
+write ./outputs/a.txt   	 <11>
+write ./outputs/a.txt hello  	 <12>
+write ./outputs/a.txt world  	 <12>
+write ./outputs/a.txt I  	 <12>
+write ./outputs/a.txt am 	 <12>
+write ./outputs/a.txt Willy 	 <12>
+write ./outputs/a.txt   	 <12>
+write ./outputs/a.txt hello  	 <13>
+write ./outputs/a.txt world  	 <13>
+write ./outputs/a.txt I  	 <13>
+write ./outputs/a.txt am 	 <13>
+write ./outputs/a.txt Willy 	 <13>
+write ./outputs/a.txt   	 <13>
+write ./outputs/a.txt hello  	 <14>
+write ./outputs/a.txt world  	 <14>
+write ./outputs/a.txt I  	 <14>
+write ./outputs/a.txt am 	 <14>
+write ./outputs/a.txt Willy 	 <14>
+write ./outputs/a.txt   	 <14>
+write ./outputs/a.txt hello  	 <15>
+write ./outputs/a.txt world  	 <15>
+write ./outputs/a.txt I  	 <15>
+write ./outputs/a.txt am 	 <15>
+write ./outputs/a.txt Willy 	 <15>
+write ./outputs/a.txt   	 <15>
+write ./outputs/a.txt hello  	 <16>
+write ./outputs/a.txt world  	 <16>
+write ./outputs/a.txt I  	 <16>
+write ./outputs/a.txt am 	 <16>
+write ./outputs/a.txt Willy 	 <16>
+write ./outputs/a.txt   	 <16>
+write ./outputs/a.txt hello  	 <17>
+write ./outputs/a.txt world  	 <17>
+write ./outputs/a.txt I  	 <17>
+write ./outputs/a.txt am 	 <17>
+write ./outputs/a.txt Willy 	 <17>
+write ./outputs/a.txt   	 <17>
+write ./outputs/a.txt hello  	 <18>
+write ./outputs/a.txt world  	 <18>
+write ./outputs/a.txt I  	 <18>
+write ./outputs/a.txt am 	 <18>
+write ./outputs/a.txt Willy 	 <18>
+write ./outputs/a.txt   	 <18>
+write ./outputs/a.txt hello  	 <19>
+write ./outputs/a.txt world  	 <19>
+write ./outputs/a.txt I  	 <19>
+write ./outputs/a.txt am 	 <19>
+write ./outputs/a.txt Willy 	 <19>
+write ./outputs/a.txt   	 <19>
+write ./outputs/a.txt hello  	 <20>
+write ./outputs/a.txt world  	 <20>
+write ./outputs/a.txt I  	 <20>
+write ./outputs/a.txt am 	 <20>
+write ./outputs/a.txt Willy 	 <20>
+write ./outputs/a.txt   	 <20>
+write ./outputs/a.txt hello  	 <21>
+write ./outputs/a.txt world  	 <21>
+write ./outputs/a.txt I  	 <21>
+write ./outputs/a.txt am 	 <21>
+write ./outputs/a.txt Willy 	 <21>
+write ./outputs/a.txt   	 <21>
+write ./outputs/a.txt hello  	 <22>
+write ./outputs/a.txt world  	 <22>
+write ./outputs/a.txt I  	 <22>
+write ./outputs/a.txt am 	 <22>
+write ./outputs/a.txt Willy 	 <22>
+write ./outputs/a.txt   	 <22>
+write ./outputs/a.txt hello  	 <23>
+write ./outputs/a.txt world  	 <23>
+write ./outputs/a.txt I  	 <23>
+write ./outputs/a.txt am 	 <23>
+write ./outputs/a.txt Willy 	 <23>
+write ./outputs/a.txt   	 <23>
+write ./outputs/a.txt hello  	 <24>
+write ./outputs/a.txt world  	 <24>
+write ./outputs/a.txt I  	 <24>
+write ./outputs/a.txt am 	 <24>
+write ./outputs/a.txt Willy 	 <24>
+write ./outputs/a.txt   	 <24>
+write ./outputs/a.txt hello  	 <25>
+write ./outputs/a.txt world  	 <25>
+write ./outputs/a.txt I  	 <25>
+write ./outputs/a.txt am 	 <25>
+write ./outputs/a.txt Willy 	 <25>
+write ./outputs/a.txt   	 <25>
+write ./outputs/a.txt hello  	 <26>
+write ./outputs/a.txt world  	 <26>
+write ./outputs/a.txt I  	 <26>
+write ./outputs/a.txt am 	 <26>
+write ./outputs/a.txt Willy 	 <26>
+write ./outputs/a.txt   	 <26>
+write ./outputs/a.txt hello  	 <27>
+write ./outputs/a.txt world  	 <27>
+write ./outputs/a.txt I  	 <27>
+write ./outputs/a.txt am 	 <27>
+write ./outputs/a.txt Willy 	 <27>
+write ./outputs/a.txt   	 <27>
+write ./outputs/a.txt hello  	 <28>
+write ./outputs/a.txt world  	 <28>
+write ./outputs/a.txt I  	 <28>
+write ./outputs/a.txt am 	 <28>
+write ./outputs/a.txt Willy 	 <28>
+write ./outputs/a.txt   	 <28>
+write ./outputs/a.txt hello  	 <29>
+write ./outputs/a.txt world  	 <29>
+write ./outputs/a.txt I  	 <29>
+write ./outputs/a.txt am 	 <29>
+write ./outputs/a.txt Willy 	 <29>
+write ./outputs/a.txt   	 <29>
+write ./outputs/a.txt hello  	 <30>
+write ./outputs/a.txt world  	 <30>
+write ./outputs/a.txt I  	 <30>
+write ./outputs/a.txt am 	 <30>
+write ./outputs/a.txt Willy 	 <30>
+write ./outputs/a.txt   	 <30>

@@ -1,0 +1,136 @@
+write ./outputs/a.txt hello  <1>
+write ./outputs/b.txt hello  <1>
+write ./outputs/c.txt hello  <1>
+write ./outputs/d.txt hello  <1>
+write ./outputs/e.txt hello  <1>
+write ./outputs/f.txt hello  <1>
+write ./outputs/g.txt hello  <1>
+write ./outputs/h.txt hello  <1>
+write ./outputs/i.txt hello  <1>
+write ./outputs/j.txt hello  <1>
+write ./outputs/k.txt hello  <1>
+write ./outputs/l.txt hello  <1>
+write ./outputs/m.txt hello  <1>
+write ./outputs/n.txt hello  <1>
+write ./outputs/o.txt hello  <1>
+write ./outputs/a.txt world  <1>
+write ./outputs/b.txt world  <1>
+write ./outputs/c.txt world  <1>
+write ./outputs/d.txt world  <1>
+write ./outputs/e.txt world  <1>
+write ./outputs/f.txt world  <1>
+write ./outputs/g.txt world  <1>
+write ./outputs/h.txt world  <1>
+write ./outputs/i.txt world  <1>
+write ./outputs/j.txt world  <1>
+write ./outputs/k.txt world  <1>
+write ./outputs/l.txt world  <1>
+write ./outputs/m.txt world  <1>
+write ./outputs/n.txt world  <1>
+write ./outputs/o.txt world  <1>
+write ./outputs/a.txt I  <1>
+write ./outputs/b.txt I  <1>
+write ./outputs/c.txt I  <1>
+write ./outputs/d.txt I  <1>
+write ./outputs/e.txt I  <1>
+write ./outputs/f.txt I  <1>
+write ./outputs/g.txt I  <1>
+write ./outputs/h.txt I  <1>
+write ./outputs/i.txt I  <1>
+write ./outputs/j.txt I  <1>
+write ./outputs/k.txt I  <1>
+write ./outputs/l.txt I  <1>
+write ./outputs/m.txt I  <1>
+write ./outputs/n.txt I  <1>
+write ./outputs/o.txt I  <1>
+write ./outputs/a.txt am <1>
+write ./outputs/b.txt am <1>
+write ./outputs/c.txt am <1>
+write ./outputs/d.txt am <1>
+write ./outputs/e.txt am <1>
+write ./outputs/f.txt am <1>
+write ./outputs/g.txt am <1>
+write ./outputs/h.txt am <1>
+write ./outputs/i.txt am <1>
+write ./outputs/j.txt am <1>
+write ./outputs/k.txt am <1>
+write ./outputs/l.txt am <1>
+write ./outputs/m.txt am <1>
+write ./outputs/n.txt am <1>
+write ./outputs/o.txt am <1>
+write ./outputs/a.txt Willy <1>
+write ./outputs/b.txt Willy <1>
+write ./outputs/c.txt Willy <1>
+write ./outputs/d.txt Willy <1>
+write ./outputs/e.txt Willy <1>
+write ./outputs/f.txt Willy <1>
+write ./outputs/g.txt Willy <1>
+write ./outputs/h.txt Willy <1>
+write ./outputs/i.txt Willy <1>
+write ./outputs/j.txt Willy <1>
+write ./outputs/k.txt Willy <1>
+write ./outputs/l.txt Willy <1>
+write ./outputs/m.txt Willy <1>
+write ./outputs/n.txt Willy <1>
+write ./outputs/o.txt Willy <1>
+write ./outputs/a.txt   <1>
+write ./outputs/b.txt   <1>
+write ./outputs/c.txt   <1>
+write ./outputs/d.txt   <1>
+write ./outputs/e.txt   <1>
+write ./outputs/f.txt   <1>
+write ./outputs/g.txt   <1>
+write ./outputs/h.txt   <1>
+write ./outputs/i.txt   <1>
+write ./outputs/j.txt   <1>
+write ./outputs/k.txt   <1>
+write ./outputs/l.txt   <1>
+write ./outputs/m.txt   <1>
+write ./outputs/n.txt   <1>
+write ./outputs/o.txt   <1>
+write ./outputs/a.txt hello  <2>
+write ./outputs/b.txt hello  <2>
+write ./outputs/c.txt hello  <2>
+write ./outputs/d.txt hello  <2>
+write ./outputs/e.txt hello  <2>
+write ./outputs/f.txt hello  <2>
+write ./outputs/g.txt hello  <2>
+write ./outputs/h.txt hello  <2>
+write ./outputs/i.txt hello  <2>
+write ./outputs/j.txt hello  <2>
+write ./outputs/k.txt hello  <2>
+write ./outputs/l.txt hello  <2>
+write ./outputs/m.txt hello  <2>
+write ./outputs/n.txt hello  <2>
+write ./outputs/o.txt hello  <2>
+write ./outputs/a.txt world  <2>
+write ./outputs/b.txt world  <2>
+write ./outputs/c.txt world  <2>
+write ./outputs/d.txt world  <2>
+write ./outputs/e.txt world  <2>
+write ./outputs/f.txt world  <2>
+write ./outputs/g.txt world  <2>
+write ./outputs/h.txt world  <2>
+write ./outputs/i.txt world  <2>
+write ./outputs/j.txt world  <2>
+write ./outputs/k.txt world  <2>
+write ./outputs/l.txt world  <2>
+write ./outputs/m.txt world  <2>
+write ./outputs/n.txt world  <2>
+write ./outputs/o.txt world  <2>
+write ./outputs/a.txt   <10>
+write ./outputs/b.txt   <10>
+write ./outputs/c.txt   <10>
+write ./outputs/d.txt   <10>
+write ./outputs/e.txt   <10>
+write ./outputs/f.txt   <10>
+write ./outputs/g.txt   <10>
+write ./outputs/h.txt   <10>
+write ./outputs/i.txt   <10>
+write ./outputs/j.txt   <10>
+write ./outputs/k.txt   <10>
+write ./outputs/l.txt   <10>
+write ./outputs/m.txt   <10>
+write ./outputs/n.txt   <10>
+write ./outputs/o.txt   <10>
+x

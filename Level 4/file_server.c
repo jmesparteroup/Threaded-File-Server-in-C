@@ -6,9 +6,8 @@
 #include <unistd.h>
 #include <time.h>
 
-#define MAX_THREADS 10
 #define BUFFER_SIZE 1000
-#define MAX_FILES 10
+#define MAX_FILES 20
 
 // DEFINIING THE DATA STRUCTURES USED
 typedef struct _rwlock_t
@@ -22,18 +21,249 @@ typedef struct _file_tracker
 {
     char filename[50];
     int users;
+    int sequence_id;
+    int current_access;
 } file_tracker;
 
+typedef struct _argument
+{
+    char filename[106];
+    int sequence_id;
+} argument;
+
 // DEFINING GLOBAL VARIABLES
-pthread_t tid[MAX_THREADS];
-char *delim = " ";
+pthread_t tid, tid2;
+rwlock_t *mutexes;
+
+sem_t filequeue;
+pthread_mutex_t workerlock;
+pthread_mutex_t sequencelock;
+pthread_mutex_t fsequencelock[MAX_FILES];
+pthread_cond_t sequencecond;
+pthread_cond_t fsequencecond[MAX_FILES];
+
 rwlock_t *mutexes;
 file_tracker *tracklist;
 sem_t tracklock;
 sem_t filequeue;
 int activefiles = 0;
+int thread_sequence = 0;
 
-// DEFINING HELPER FUNCTIONS
+void rwlock_init(rwlock_t *lock);
+void file_tracker_init(file_tracker *tracker);
+void rwlock_acquire_readlock(rwlock_t *lock);
+void rwlock_release_readlock(rwlock_t *lock);
+void rwlock_acquire_writelock(rwlock_t *lock);
+void rwlock_release_writelock(rwlock_t *lock);
+void FILE_OPEN_SIMULATION();
+void WRITE_LOGS(char *command, char *dest, char *contents);
+void READ_CONTENT(char *command, char *dest, FILE *fp1);
+void write_command(char *wholecommand, char *dest, char *string);
+void read_command(char *wholecommand, char *dest);
+void empty_command(char *wholecommand, char *dest);
+int tracklist_check(char *dir);
+void release_filespot(int index);
+
+void *worker_thread(void *arg)
+{
+
+    pthread_mutex_lock(&sequencelock);
+    int sequence_id;
+    // break down thread_info into different piece of shits
+
+    char *wholecommandtok = malloc(106);
+    char *wholecommandarg = malloc(106);
+
+    argument *thread_info = (argument *)arg;
+    strcpy(wholecommandtok, thread_info->filename);
+    strcpy(wholecommandarg, thread_info->filename);
+    sequence_id = thread_info->sequence_id;
+
+    printf("ID: %d | Thread_sequence: %d\n", thread_info->sequence_id, thread_sequence);
+
+    // before proceeding let's check if it's your turn
+    while (sequence_id != thread_sequence)
+    {
+        pthread_cond_wait(&sequencecond, &sequencelock);
+    }
+
+    thread_sequence++;
+    pthread_cond_signal(&sequencecond);
+    pthread_mutex_unlock(&sequencelock);
+
+    // lock critical section up
+    pthread_mutex_lock(&workerlock);
+    int rwlock_index;
+    int sequence_id_filequeue;
+    // make a copy of wholecommand to be used for strtok for decomposition
+
+    char *command = strtok(wholecommandtok, " ");
+    char *truedir = malloc(50);
+
+    // check if write, or (read/empty)
+    if (strcmp("write", command) == 0)
+    {
+
+        char *dir = strtok(NULL, " ");
+        strcpy(truedir, dir);
+
+        char *string = strtok(NULL, "\0");
+
+        rwlock_index = tracklist_check(truedir);
+        sequence_id_filequeue = tracklist[rwlock_index].sequence_id;
+        tracklist[rwlock_index].sequence_id++;
+
+        pthread_mutex_unlock(&workerlock);
+
+        pthread_mutex_lock(&fsequencelock[rwlock_index]);
+        printf("Fseq: %d | curr_access: %d\n", sequence_id_filequeue, tracklist[rwlock_index].current_access);
+        while (sequence_id_filequeue != tracklist[rwlock_index].current_access)
+            pthread_cond_wait(&fsequencecond[rwlock_index], &fsequencelock[rwlock_index]);
+        puts("GOT IN!");
+        tracklist[rwlock_index].current_access++;
+        pthread_mutex_unlock(&fsequencelock[rwlock_index]);
+
+        rwlock_acquire_writelock(&mutexes[rwlock_index]);
+        printf("%s on slot %d | active files: %d\n", wholecommandarg, rwlock_index, activefiles);
+        write_command(wholecommandarg, truedir, string);
+        rwlock_release_writelock(&mutexes[rwlock_index]);
+    }
+    else
+    {
+        char *dir = strtok(NULL, "\n\0");
+        strcpy(truedir, dir);
+        rwlock_index = tracklist_check(truedir);
+        sequence_id_filequeue = tracklist[rwlock_index].sequence_id;
+        tracklist[rwlock_index].sequence_id++;
+
+        if (strcmp("read", command) == 0)
+        {
+            pthread_mutex_unlock(&workerlock);
+
+            pthread_mutex_lock(&fsequencelock[rwlock_index]);
+            printf("Fseq: %d | curr_access: %d\n", sequence_id_filequeue, tracklist[rwlock_index].current_access);
+            while (sequence_id_filequeue != tracklist[rwlock_index].current_access)
+                pthread_cond_wait(&fsequencecond[rwlock_index], &fsequencelock[rwlock_index]);
+            puts("GOT IN!");
+            tracklist[rwlock_index].current_access++;
+            pthread_mutex_unlock(&fsequencelock[rwlock_index]);
+
+            rwlock_acquire_readlock(&mutexes[rwlock_index]);
+            printf("%s on slot %d | active files: %d\n", wholecommandarg, rwlock_index, activefiles);
+            read_command(wholecommandarg, truedir);
+            rwlock_release_readlock(&mutexes[rwlock_index]);
+        }
+        if (strcmp("empty", command) == 0)
+        {
+            pthread_mutex_unlock(&workerlock);
+
+            pthread_mutex_lock(&fsequencelock[rwlock_index]);
+            printf("Fseq: %d | curr_access: %d\n", sequence_id_filequeue, tracklist[rwlock_index].current_access);
+            while (sequence_id_filequeue != tracklist[rwlock_index].current_access)
+                pthread_cond_wait(&fsequencecond[rwlock_index], &fsequencelock[rwlock_index]);
+            puts("GOT IN!");
+            tracklist[rwlock_index].current_access++;
+            pthread_mutex_unlock(&fsequencelock[rwlock_index]);
+
+            rwlock_acquire_writelock(&mutexes[rwlock_index]);
+            printf("%s on slot %d | active files: %d\n", wholecommandarg, rwlock_index, activefiles);
+            empty_command(wholecommandarg, truedir);
+            rwlock_release_writelock(&mutexes[rwlock_index]);
+        }
+    }
+    release_filespot(rwlock_index);
+    pthread_exit(NULL);
+}
+
+void *master_thread()
+{
+    FILE *fptr;
+    time_t curtime;
+
+    puts("MASTER THREAD CREATED");
+
+    int i = 0;
+
+    while (1)
+    {
+        char input[106];
+        if (fgets(input, 106, stdin) == NULL)
+            break;
+        if (strlen(input) < 4)
+            break;
+
+        input[strlen(input) - 2] = 0;
+
+        // ORIGINAL
+        // pthread_create(&tid, NULL, &worker_thread, &input);
+        // pthread_detach(tid);
+        argument *arg = malloc(sizeof(argument));
+
+        arg->sequence_id = i++;
+        strcpy(arg->filename, input);
+
+        pthread_create(&tid, NULL, &worker_thread, arg);
+        pthread_detach(tid);
+
+        if ((fptr = fopen("commands.txt", "a")) == NULL)
+        {
+            puts("LOGGING COMMAND FAILED");
+        }
+
+        time(&curtime);
+        char *c_time_string = ctime(&curtime);
+
+        // fprintf(stderr, "%s %s\n", input, c_time_string);
+        fprintf(fptr, "%s %s\n", input, c_time_string);
+        fclose(fptr);
+    }
+    while (1)
+    {
+        sleep(1);
+    };
+}
+
+void *waker(void *arg)
+{
+    while (1)
+    {
+        pthread_cond_signal(&sequencecond);
+        for (int i = 0; i < MAX_FILES; i++)
+            pthread_cond_signal(&fsequencecond[i]);
+        usleep(1);
+    }
+}
+
+int main()
+{
+    mutexes = malloc(sizeof(rwlock_t) * MAX_FILES);
+    tracklist = malloc(sizeof(file_tracker) * MAX_FILES);
+
+    pthread_mutex_init(&workerlock, NULL);
+    pthread_mutex_init(&sequencelock, NULL);
+    pthread_cond_init(&sequencecond, NULL);
+
+    sem_init(&tracklock, 0, 1);
+    sem_init(&filequeue, 0, MAX_FILES);
+
+    puts("INIT DONE");
+    for (int i = 0; i < MAX_FILES; i++)
+    {
+        rwlock_init(&mutexes[i]);
+        file_tracker_init(&tracklist[i]);
+        pthread_mutex_init(&fsequencelock[i], NULL);
+        pthread_cond_init(&fsequencecond[i], NULL);
+    }
+
+    pthread_create(&tid, NULL, &master_thread, NULL);
+    pthread_create(&tid2, NULL, &waker, NULL);
+    pthread_join(tid, NULL);
+
+    return 0;
+}
+
+// HELPER FUNCTIONS
+
 void rwlock_init(rwlock_t *lock)
 {
     lock->readers = 0;
@@ -43,6 +273,7 @@ void rwlock_init(rwlock_t *lock)
 
 void file_tracker_init(file_tracker *tracker)
 {
+    strcmp(tracker->filename, "INIT");
     tracker->users = 0;
 }
 
@@ -76,9 +307,10 @@ void rwlock_release_writelock(rwlock_t *lock)
 
 void FILE_OPEN_SIMULATION()
 {
+    srand(time(0));
     int SLEEP_TOSS = rand() % 100;
 
-    if (SLEEP_TOSS > 80)
+    if (SLEEP_TOSS >= 80)
         sleep(6);
 
     else
@@ -134,7 +366,6 @@ void write_command(char *wholecommand, char *dest, char *string)
 {
     // SIMULATE OPENING A FILE
     FILE_OPEN_SIMULATION();
-    fprintf(stderr, "\nEXECUTING: %s\n", wholecommand);
 
     FILE *fptr;
 
@@ -152,10 +383,7 @@ void write_command(char *wholecommand, char *dest, char *string)
         fputc(string[i], fptr);
         usleep(25);
     }
-    fprintf(fptr, "\n");
-
-    puts("DONE");
-
+    // fprintf(fptr, "\n");
     fclose(fptr);
 }
 
@@ -165,7 +393,8 @@ void read_command(char *wholecommand, char *dest)
     // SIMULATE OPENING A FILE
     FILE_OPEN_SIMULATION();
     FILE *fptr;
-    fprintf(stderr, "\nEXECUTING: %s\n", wholecommand);
+
+    // dest[strlen(dest)-1] = 0;
 
     if ((fptr = fopen(dest, "r")) == NULL)
     {
@@ -183,12 +412,10 @@ void empty_command(char *wholecommand, char *dest)
 
     // SIMULATE OPENING A FILE
     FILE_OPEN_SIMULATION();
-    fprintf(stderr, "\nEXECUTING: %s\n", wholecommand);
 
     FILE *fptr;
     if ((fptr = fopen(dest, "r")) == NULL)
     {
-        puts("HELLO");
         WRITE_LOGS(wholecommand, "empty.txt", "FILE ALREADY EMPTY");
         return;
     }
@@ -202,7 +429,6 @@ void empty_command(char *wholecommand, char *dest)
 int tracklist_check(char *dir)
 {
     sem_wait(&tracklock);
-    puts("AQUIRED TRACKLOCK");
     int rwlock_index = -1;
 
     while (1)
@@ -212,34 +438,31 @@ int tracklist_check(char *dir)
             if (rwlock_index < 0)
                 if ((tracklist[i].users == 0))
                 {
-                    puts("FOUND INDEX");
                     rwlock_index = i;
                 }
 
             if (strcmp(dir, tracklist[i].filename) == 0)
             {
-                puts("FILENAME BEING USED");
-                ++(tracklist[i].users);
+
                 rwlock_index = i;
+                ++(tracklist[rwlock_index].users);
 
                 sem_post(&tracklock);
                 return rwlock_index;
             }
         }
-        puts("OUT OF FORLOOP");
         sem_wait(&filequeue);
         if (rwlock_index >= 0)
         {
-            puts("BREAKING OUT OF LOOP");
+            sem_post(&tracklock);
+            activefiles++;
             break;
         }
         sem_post(&filequeue);
     }
 
-    puts("ATTEMPTING TO EDIT TRACKLIST");
     strcpy(tracklist[rwlock_index].filename, dir);
     ++(tracklist[rwlock_index].users);
-    puts("SUCCESS EDITING TRACKLIST");
 
     sem_post(&tracklock);
     return rwlock_index;
@@ -247,125 +470,16 @@ int tracklist_check(char *dir)
 
 void release_filespot(int index)
 {
+    sem_wait(&tracklock);
+
     --(tracklist[index].users);
     if (tracklist[index].users == 0)
-        sem_post(&filequeue);
-}
-
-void *worker_thread(void *arg)
-{
-    int rwlock_index;
-    char *wholecommand = (char *)arg;
-    char wholecommand_copy[106];
-    strcpy(wholecommand_copy, wholecommand);
-
-    char *command = strtok(wholecommand, delim);
-    char *truecommand = malloc(sizeof(char) * 50);
-    strcpy(truecommand, command);
-
-    if (strcmp("write", truecommand) == 0)
     {
-        // puts("INSIDE WRITE");
-        char *dir = strtok(NULL, delim);
-        char *truedir = malloc(sizeof(char) * 50);
-        strcpy(truedir, dir);
-
-        // GET FILE_QUEUE INDEX
-        rwlock_index = tracklist_check(truedir);
-        printf("CHECKED TRACKLIST with index: %d\n", rwlock_index);
-
-        char *string = strtok(NULL, "\0");
-        char str[50];
-        strcpy(str, string);
-
-        rwlock_acquire_writelock(&mutexes[rwlock_index]);
-        puts("ACQUIRED WRITELOCK");
-        write_command(wholecommand_copy, truedir, str);
-        rwlock_release_writelock(&mutexes[rwlock_index]);
+        activefiles--;
+        tracklist[index].current_access = 0;
+        tracklist[index].sequence_id = 0;
     }
-    else
-    {
-        char *dir = strtok(NULL, "\n");
-        char *truedir = malloc(sizeof(char) * 50);
-        strcpy(truedir, dir);
+    sem_post(&filequeue);
 
-        // GET FILE_QUEUE INDEX
-        rwlock_index = tracklist_check(truedir);
-
-        if (strcmp("read", truecommand) == 0)
-        {
-            rwlock_acquire_readlock(&mutexes[rwlock_index]);
-            read_command(wholecommand_copy, truedir);
-            rwlock_release_readlock(&mutexes[rwlock_index]);
-        }
-
-        if (strcmp("empty", truecommand) == 0)
-        {
-            rwlock_acquire_writelock(&mutexes[rwlock_index]);
-            empty_command(wholecommand_copy, truedir);
-            rwlock_release_writelock(&mutexes[rwlock_index]);
-        }
-    }
-
-    release_filespot(rwlock_index);
-    pthread_exit(NULL);
-}
-
-void master_thread()
-{
-
-    char input[106];
-    FILE *fptr;
-    time_t curtime;
-    puts("MASTER THREAD CREATED");
-
-    int i=1;
-
-    while (1)
-    {
-        fgets(input, 50, stdin);
-        if (strlen(input) < 3)
-            break;
-        pthread_create(&tid[i % MAX_THREADS], NULL, &worker_thread, &input);
-        if ((fptr = fopen("commands.txt", "a")) == NULL)
-        {
-            puts("LOGGING COMMAND FAILED");
-        }
-
-        time(&curtime);
-        char *c_time_string = ctime(&curtime);
-        strtok(input, "\n");
-
-        fprintf(stderr, "%s %s\n", input, c_time_string);
-        fprintf(fptr, "%s %s\n", input, c_time_string);
-        fclose(fptr);
-
-    }
-
-    while (1)
-    {
-    };
-}
-
-int main()
-{
-    void *fs[] = {master_thread};
-
-    mutexes = malloc(sizeof(rwlock_t *) * MAX_FILES);
-    tracklist = malloc(sizeof(file_tracker *) * MAX_FILES);
-
-    sem_init(&tracklock, 0, 1);
-    sem_init(&filequeue, 0, MAX_FILES);
-
-    puts("INIT DONE");
-    for (int i = 0; i < MAX_FILES; i++)
-    {
-        rwlock_init(&mutexes[i]);
-        file_tracker_init(&tracklist[i]);
-    }
-
-    pthread_create(&tid[0], NULL, fs[0], NULL);
-    pthread_join(tid[0], NULL);
-
-    return 0;
+    sem_post(&tracklock);
 }

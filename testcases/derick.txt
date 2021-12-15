@@ -1,0 +1,64 @@
+write test.txt 1 2
+write test.txt 3 4
+read test.txt
+write test.txt 5 6
+write anothertest.txt 1 2
+write anothertest.txt 3 4
+empty test.txt
+read test.txt
+read test.txt
+write test.txt 7 8
+read anothertest.txt
+read test.txt
+empty test.txt
+write anothertest.txt 5 6
+empty anothertest.txt
+read anothertest.txt
+write test.txt 9 10
+write test.txt 11 12
+read anothertest.txt
+write anothertest.txt 7 8
+read anothertest.txt
+empty anothertest.txt
+write test.txt 13 14
+read test.txt
+write anothertest.txt 11 12
+write anothertest.txt 13 14
+read anothertest.txt
+empty test.txt
+write anothertest.txt 9 10
+empty anothertest.txt
+write testes.txt 1 2
+write testes.txt 3 4
+read testes.txt
+write testes.txt 5 6
+write awooga.txt 1 2
+write awooga.txt 3 4
+empty testes.txt
+read testes.txt
+read testes.txt
+write testes.txt 7 8
+read awooga.txt
+read testes.txt
+empty testes.txt
+write awooga.txt 5 6
+empty awooga.txt
+read awooga.txt
+write testes.txt 9 10
+write testes.txt 11 12
+read awooga.txt
+write awooga.txt 7 8
+read awooga.txt
+empty awooga.txt
+write testes.txt 13 14
+read testes.txt
+write awooga.txt 11 12
+write awooga.txt 13 14
+read awooga.txt
+empty testes.txt
+write awooga.txt 9 10
+read awooga.txt
+empty awooga.txt
+write snooze.txt 9 10
+read snooze.txt
+empty snooze.txt
