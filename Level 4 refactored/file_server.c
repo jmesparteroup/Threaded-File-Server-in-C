@@ -6,8 +6,9 @@
 #include <unistd.h>
 #include <time.h>
 
-#define BUFFER_SIZE 250
-#define MAX_FILES 10
+#define BUFFER_SIZE 500
+#define MAX_FILES 30
+#define INVALID 0
 #define WRITE 2
 #define READ 4
 #define EMPTY 8
@@ -77,7 +78,6 @@ void fsequence_check(int rwlock_index, int sequence_id_filequeue);
 void log_commands(argument *arg);
 argument *parse_input(char *input, int i);
 
-
 void *worker_thread(void *arg)
 {
     // fix sequence of threads
@@ -97,13 +97,13 @@ void *worker_thread(void *arg)
     }
 
     next = 0;
-    thread_sequence++;
 
     rwlock_index = tracklist_check(thread_info->dir);
-    next = 1;
     sequence_id_filequeue = tracklist[rwlock_index].sequence_id;
-
     tracklist[rwlock_index].sequence_id++;
+    thread_sequence++;
+
+    next = 1;
 
     if (thread_info->commandtype == WRITE)
     {
@@ -112,7 +112,7 @@ void *worker_thread(void *arg)
         fsequence_check(rwlock_index, sequence_id_filequeue);
 
         rwlock_acquire_writelock(&mutexes[rwlock_index]);
-        printf("%s on slot %d | active files: %d\n", thread_info->command, rwlock_index, activefiles);
+        printf("%s %s %s on slot %d | active files: %d | t_id: %d | fseq_id: %d\n", thread_info->command, thread_info->dir, thread_info->string, rwlock_index, activefiles, thread_info->sequence_id, sequence_id_filequeue);
         write_command(thread_info->wholecommand, thread_info->dir, thread_info->string);
         rwlock_release_writelock(&mutexes[rwlock_index]);
     }
@@ -125,10 +125,10 @@ void *worker_thread(void *arg)
 
             fsequence_check(rwlock_index, sequence_id_filequeue);
 
-            rwlock_acquire_readlock(&mutexes[rwlock_index]);
+            rwlock_acquire_writelock(&mutexes[rwlock_index]);
             printf("%s %s on slot %d | active files: %d\n", thread_info->command, thread_info->dir, rwlock_index, activefiles);
             read_command(thread_info->wholecommand, thread_info->dir);
-            rwlock_release_readlock(&mutexes[rwlock_index]);
+            rwlock_release_writelock(&mutexes[rwlock_index]);
         }
 
         if (thread_info->commandtype == EMPTY)
@@ -143,6 +143,7 @@ void *worker_thread(void *arg)
             rwlock_release_writelock(&mutexes[rwlock_index]);
         }
     }
+    tracklist[rwlock_index].current_access++;
     tracklist[rwlock_index].fnext = 1;
     release_filespot(rwlock_index);
     pthread_exit(NULL);
@@ -153,21 +154,26 @@ void *master_thread(void *arg)
     puts("FILESERVER READY TO ACCEPT INPUTS");
 
     int i = 0;
+    char input[106];
+
     while (1)
     {
-        char input[106];
-        argument *arg = malloc(sizeof(argument));
 
-        if (fgets(input, 106, stdin) == NULL)
+        argument *arg = malloc(sizeof(argument));
+        if (fgets(input, 106, stdin) == NULL) // HANDLE EOF
             break;
 
         arg = parse_input(input, i);
+        if (arg->commandtype == INVALID)
+            break; // HANDLE INVALID INSTRUCTIONS
+        log_commands(arg);
 
         pthread_create(&tid, NULL, &worker_thread, arg);
         pthread_detach(tid);
 
         i++;
     }
+    puts("Reached end of the file. Executing remaining commands");
     while (1)
     {
         sleep(1);
@@ -226,19 +232,20 @@ argument *parse_input(char *input, int i)
     argument *arg = malloc(sizeof(argument));
 
     input[strlen(input) - 2] = 0;
+    arg->commandtype = INVALID; // commandtype initially invalid if not overwritten then we know it's invalid.
 
     strcpy(arg->wholecommand, input);
     command = strtok(input, " ");
     if (strcmp(command, "write") == 0)
     {
         dir = strtok(NULL, " ");
-        string = strtok(NULL, "\n\0");
+        string = strtok(NULL, "\0");
         strcpy(arg->string, string);
         arg->commandtype = WRITE;
     }
     else
     {
-        dir = strtok(NULL, "\n\0");
+        dir = strtok(NULL, "\0");
         if (strcmp(command, "read") == 0)
             arg->commandtype = READ;
         if (strcmp(command, "empty") == 0)
@@ -248,6 +255,10 @@ argument *parse_input(char *input, int i)
     strcpy(arg->command, command);
     strcpy(arg->dir, dir);
     arg->sequence_id = i;
+
+    free(command);
+    free(dir);
+    free(string);
 
     return arg;
 }
@@ -280,11 +291,10 @@ void fsequence_check(int rwlock_index, int sequence_id_filequeue)
     // check if it's the thread's turn on the filequeue slot
     while (sequence_id_filequeue != tracklist[rwlock_index].current_access)
         pthread_cond_wait(&fsequencecond[rwlock_index], &fsequencelock[rwlock_index]);
-    printf("Fseq: %d | curr_access: %d\n", sequence_id_filequeue, tracklist[rwlock_index].current_access);
+    // printf("Fseq: %d | curr_access: %d\n", sequence_id_filequeue, tracklist[rwlock_index].current_access);
 
     // iterate current access to signal next job in the sequence that they can run now.
     tracklist[rwlock_index].fnext = 0;
-    tracklist[rwlock_index].current_access++;
 
     pthread_mutex_unlock(&fsequencelock[rwlock_index]);
 }
@@ -361,6 +371,7 @@ void WRITE_LOGS(char *command, char *dest, char *contents)
 void READ_CONTENT(char *command, char *dest, FILE *fp1)
 {
     FILE *fptr;
+    // fprintf(stderr, "fptr: %p\n", fp1);
     long numbytes;
     char buffer[BUFFER_SIZE];
 
@@ -407,7 +418,7 @@ void write_command(char *wholecommand, char *dest, char *string)
         fputc(string[i], fptr);
         usleep(25);
     }
-
+    // fprintf(fptr, "\n");
     fclose(fptr);
 }
 
@@ -418,6 +429,7 @@ void read_command(char *wholecommand, char *dest)
     FILE_OPEN_SIMULATION();
     FILE *fptr;
 
+    // dest[strlen(dest)-1] = 0;
 
     if ((fptr = fopen(dest, "r")) == NULL)
     {
@@ -425,6 +437,7 @@ void read_command(char *wholecommand, char *dest)
         return;
     }
 
+    // fprintf(stderr, "fptr: %p\n", fptr);
     READ_CONTENT(wholecommand, "read.txt", fptr);
     fclose(fptr);
 }
@@ -476,8 +489,8 @@ int tracklist_check(char *dir)
         sem_wait(&filequeue);
         if (rwlock_index >= 0)
         {
-            sem_post(&tracklock);
             activefiles++;
+            sem_post(&tracklock);
             break;
         }
         sem_post(&filequeue);
