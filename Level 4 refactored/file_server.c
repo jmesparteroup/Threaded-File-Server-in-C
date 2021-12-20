@@ -107,6 +107,10 @@ void *worker_thread(void *arg)
 
     // check commandtype and execute commands accordingly
     pthread_mutex_lock(&commandlocks[rwlock_index]);
+
+    // put some delay
+    file_open_simulation()
+    
     if (thread_info->commandtype == WRITE)
     {
         printf("%s %s %s on slot %d | active files: %d | t_id: %d | fseq_id: %d\n", thread_info->command, thread_info->dir, thread_info->string, rwlock_index, activefiles, thread_info->sequence_id, sequence_id_filequeue);
@@ -416,24 +420,43 @@ void empty_command(char *wholecommand, char *dest)
     return;
 }
 
+// this accepts a directory as an input and check the current filequeue
+// for either of the following:
+// 1) if there is a currently running process that has the same directory
+// 2) there is a slot in filequeue (users == 0)
+
+// if neither, then the process will sleep on the filequeue semaphore
 int tracklist_check(char *dir)
 {
+    // acquire filequeue lock
     sem_wait(&tracklock);
+
+    // set default rwlock_index as -1 so that it will signify that it still
+    // has not found a slot in the queue
     int rwlock_index = -1;
 
+    
     while (1)
     {
+        // for each time that it will look for a spot in the queue
+        // it will check the filequeue (tracklist) from index 0 to MAX_FILES - 1
+
         for (int i = 0; i < MAX_FILES; i++)
         {
+            // Will check 2) if there is a slot in the queue
             if (rwlock_index < 0)
                 if ((tracklist[i].users == 0))
                 {
                     rwlock_index = i;
                 }
 
+            // We dont break since we still need to check for the entire queue
+            // if there exists a thread that came before and is currently still
+            // running that has the same directory as the current thread.
+
             if (strcmp(dir, tracklist[i].filename) == 0)
             {
-
+            
                 rwlock_index = i;
                 ++(tracklist[rwlock_index].users);
 
@@ -441,18 +464,34 @@ int tracklist_check(char *dir)
                 return rwlock_index;
             }
         }
+
+        // it's going to wait on the file queue since it searched the whole
+        // queue and there are 2 cases:
+        // 1) it has found a slot
+        // 2) no slot has been found
+        // if it has found a slot then it should consume a slot in the semaphore
+        // hence we should call sem_wait, otherwise if it has not found a slot
+        // meaning it's full then sem_wait will cause it to sleep.
+        
         sem_wait(&filequeue);
+        
+        // if it has found an index, then we should increment the number of active files
+        // then give up the lock (binary semaphore)
+        // then break out of the search loop
+
         if (rwlock_index >= 0)
         {
             activefiles++;
-            sem_post(&tracklock);
             break;
         }
-        sem_post(&filequeue);
+        // sem_post(&filequeue);
     }
 
+    // we copy the directory to the filename attribute of the queue slot
+    // then we increment the number of users it has
     strcpy(tracklist[rwlock_index].filename, dir);
     ++(tracklist[rwlock_index].users);
+
 
     sem_post(&tracklock);
     return rwlock_index;
