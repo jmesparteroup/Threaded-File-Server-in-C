@@ -1,17 +1,18 @@
 filenames: str = "abcdefghijklmnopqrstuvwxyz"
-sequence: str = "xyz"
-repeat: int=7
+sequence: str = "     "
+repeat: int=10
 
 fwrite = open(f'{input()}.txt', 'w')
+limit = filenames[:]
 
 for i in range(1,repeat+1):
     for item in sequence:
-        for filename in filenames:
-            fwrite.write(f"write ./outputs/{filename}.txt {filename}<{item}{i}>\n")
+        for filename in limit:
+            fwrite.write(f"write ./outputs/{filename}.txt {item}{filename}<{i}>\n")
 
 
 
-for filename in filenames:
+for filename in limit:
     fwrite.write(f"read ./outputs/{filename}.txt\n")
     fwrite.write(f"empty ./outputs/{filename}.txt\n")
 fwrite.close()
