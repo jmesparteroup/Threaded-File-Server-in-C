@@ -1,0 +1,20 @@
+write ./outputs/a.txt  a<1>
+write ./outputs/b.txt  b<1>
+write ./outputs/c.txt  c<1>
+write ./outputs/d.txt  d<1>
+write ./outputs/e.txt  e<1>
+write ./outputs/a.txt  a<2>
+write ./outputs/b.txt  b<2>
+write ./outputs/c.txt  c<2>
+write ./outputs/d.txt  d<2>
+write ./outputs/e.txt  e<2>
+read ./outputs/a.txt
+empty ./outputs/a.txt
+read ./outputs/b.txt
+empty ./outputs/b.txt
+read ./outputs/c.txt
+empty ./outputs/c.txt
+read ./outputs/d.txt
+empty ./outputs/d.txt
+read ./outputs/e.txt
+empty ./outputs/e.txt

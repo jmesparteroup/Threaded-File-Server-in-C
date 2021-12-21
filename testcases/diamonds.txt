@@ -1,0 +1,99 @@
+write ./outputs/1.txt  *
+write ./outputs/2.txt   *
+write ./outputs/2.txt  ***
+write ./outputs/2.txt   *
+write ./outputs/3.txt    *
+write ./outputs/3.txt   ***
+write ./outputs/3.txt  *****
+write ./outputs/3.txt   ***
+write ./outputs/3.txt    *
+write ./outputs/4.txt     *
+write ./outputs/4.txt    ***
+write ./outputs/4.txt   *****
+write ./outputs/4.txt  *******
+write ./outputs/4.txt   *****
+write ./outputs/4.txt    ***
+write ./outputs/4.txt     *
+write ./outputs/5.txt      *
+write ./outputs/5.txt     ***
+write ./outputs/5.txt    *****
+write ./outputs/5.txt   *******
+write ./outputs/5.txt  *********
+write ./outputs/5.txt   *******
+write ./outputs/5.txt    *****
+write ./outputs/5.txt     ***
+write ./outputs/5.txt      *
+write ./outputs/6.txt       *
+write ./outputs/6.txt      ***
+write ./outputs/6.txt     *****
+write ./outputs/6.txt    *******
+write ./outputs/6.txt   *********
+write ./outputs/6.txt  ***********
+write ./outputs/6.txt   *********
+write ./outputs/6.txt    *******
+write ./outputs/6.txt     *****
+write ./outputs/6.txt      ***
+write ./outputs/6.txt       *
+write ./outputs/7.txt        *
+write ./outputs/7.txt       ***
+write ./outputs/7.txt      *****
+write ./outputs/7.txt     *******
+write ./outputs/7.txt    *********
+write ./outputs/7.txt   ***********
+write ./outputs/7.txt  *************
+write ./outputs/7.txt   ***********
+write ./outputs/7.txt    *********
+write ./outputs/7.txt     *******
+write ./outputs/7.txt      *****
+write ./outputs/7.txt       ***
+write ./outputs/7.txt        *
+write ./outputs/8.txt         *
+write ./outputs/8.txt        ***
+write ./outputs/8.txt       *****
+write ./outputs/8.txt      *******
+write ./outputs/8.txt     *********
+write ./outputs/8.txt    ***********
+write ./outputs/8.txt   *************
+write ./outputs/8.txt  ***************
+write ./outputs/8.txt   *************
+write ./outputs/8.txt    ***********
+write ./outputs/8.txt     *********
+write ./outputs/8.txt      *******
+write ./outputs/8.txt       *****
+write ./outputs/8.txt        ***
+write ./outputs/8.txt         *
+write ./outputs/9.txt          *
+write ./outputs/9.txt         ***
+write ./outputs/9.txt        *****
+write ./outputs/9.txt       *******
+write ./outputs/9.txt      *********
+write ./outputs/9.txt     ***********
+write ./outputs/9.txt    *************
+write ./outputs/9.txt   ***************
+write ./outputs/9.txt  *****************
+write ./outputs/9.txt   ***************
+write ./outputs/9.txt    *************
+write ./outputs/9.txt     ***********
+write ./outputs/9.txt      *********
+write ./outputs/9.txt       *******
+write ./outputs/9.txt        *****
+write ./outputs/9.txt         ***
+write ./outputs/9.txt          *
+read ./outputs/1.txt
+empty ./outputs/1.txt
+read ./outputs/2.txt
+empty ./outputs/2.txt
+read ./outputs/3.txt
+empty ./outputs/3.txt
+read ./outputs/4.txt
+empty ./outputs/4.txt
+read ./outputs/5.txt
+empty ./outputs/5.txt
+read ./outputs/6.txt
+empty ./outputs/6.txt
+read ./outputs/7.txt
+empty ./outputs/7.txt
+read ./outputs/8.txt
+empty ./outputs/8.txt
+read ./outputs/9.txt
+empty ./outputs/9.txt
