@@ -1,6 +1,6 @@
-//   A | M
-//  — + — 
-// D | G 
+//   A | M   CS 140 PROJECT 2
+//  — + —    ESPARTERO, Joshua Allyn Marck M.
+// D | G     2019-10009
 
 #include <stdio.h>
 #include <stdlib.h>
